@@ -27,5 +27,40 @@
         </div>
     </div>
 
+    <div th:fragment="jobTable">
+        <table class="job-listing">
+            <tr th:each="job : ${jobs}">
+                <td th:utext="'ID: ' + ${job.getId()} + '<br/>Name: ' + ${job.getName()}
+                      + '<br/>Employer: ' + ${job.getEmployer()} + '<br/>Location: ' + ${job.getLocation()}
+                      + '<br/>Position Type: ' + ${job.getPositionType()} + '<br/>Skill: ' + ${job.getCoreCompetency()}">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <form th:fragment="searchForm" th:action="@{/search/results}" method = "post">
+        <h2>Search by:</h2>
+
+        <p>
+            <span th:each="column : ${columns}">
+                <input
+                        type="radio"
+                        name="searchType"
+                        th:id="${column.key}"
+                        th:value="${column.key}"
+                        th:checked="${column.key == 'all'}"/>
+                <label th:for="${column.key}" th:text="${column.value}"></label>
+            </span>
+
+        </p>
+
+        <p>
+            <label for="searchTerm">Keyword:</label>
+            <input type="text" name="searchTerm" id="searchTerm" />
+        </p>
+
+        <input type="submit" value="Search" />
+    </form>
+
 </body>
 </html>
